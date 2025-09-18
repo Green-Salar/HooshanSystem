@@ -735,7 +735,78 @@
         </div>
     </footer>
 
-    <script src="chart-simple.js"></script>
-    <script src="script.js"></script>
+    </div> <!-- End demo-content -->
+    
+    <script>
+        // Password protection functionality
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            const passwordOverlay = document.getElementById('passwordOverlay');
+            const demoContent = document.getElementById('demoContent');
+            
+            const correctPassword = '2121';
+            const enteredPassword = passwordInput.value;
+            
+            if (enteredPassword === correctPassword) {
+                // Correct password - hide overlay and show demo
+                passwordOverlay.style.display = 'none';
+                demoContent.classList.add('authenticated');
+                
+                // Initialize the demo system
+                if (typeof window.digitalTwins === 'undefined') {
+                    // Load the demo scripts
+                    loadDemoScripts();
+                }
+            } else {
+                // Wrong password - show error
+                passwordError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Shake animation
+                passwordInput.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    passwordInput.style.animation = '';
+                }, 500);
+            }
+        }
+        
+        function loadDemoScripts() {
+            // Load chart library
+            const chartScript = document.createElement('script');
+            chartScript.src = 'chart-simple.js';
+            document.head.appendChild(chartScript);
+            
+            // Load main demo script
+            const demoScript = document.createElement('script');
+            demoScript.src = 'script.js';
+            document.head.appendChild(demoScript);
+        }
+        
+        // Allow Enter key to submit password
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            
+            // Focus on password input when page loads
+            passwordInput.focus();
+        });
+        
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>

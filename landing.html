@@ -186,6 +186,148 @@
             opacity: 0.9;
         }
         
+        /* Clients Section */
+        .clients-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .clients-section h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .clients-section p {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .client-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .client-logo:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        
+        .logo-placeholder {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-text {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.8rem;
+            color: #666;
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+        }
+        
+        /* Alternative logo display with company icons */
+        .client-logo:nth-child(1) .logo-placeholder::before {
+            content: "🏭";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(2) .logo-placeholder::before {
+            content: "🚗";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(3) .logo-placeholder::before {
+            content: "⚗️";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(4) .logo-placeholder::before {
+            content: "🏦";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(5) .logo-placeholder::before {
+            content: "📡";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(6) .logo-placeholder::before {
+            content: "🚛";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(7) .logo-placeholder::before {
+            content: "🛢️";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(8) .logo-placeholder::before {
+            content: "🚙";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(9) .logo-placeholder::before {
+            content: "📦";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(10) .logo-placeholder::before {
+            content: "🛡️";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(11) .logo-placeholder::before {
+            content: "⚙️";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .client-logo:nth-child(12) .logo-placeholder::before {
+            content: "🧪";
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
         .footer-landing {
             background: #1a202c;
             color: white;
@@ -234,6 +376,23 @@
             .btn-hero {
                 width: 100%;
                 max-width: 300px;
+            }
+            
+            .clients-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+            
+            .client-logo {
+                padding: 1rem;
+            }
+            
+            .logo-text {
+                font-size: 0.9rem;
+            }
+            
+            .logo-subtitle {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -313,6 +472,88 @@
                 <div class="stat-item">
                     <div class="stat-number">24/7</div>
                     <div class="stat-label">پشتیبانی</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-section">
+        <div class="container">
+            <h2>شرکای تجاری ما</h2>
+            <p>شرکت‌های پیشرو ایرانی که به ما اعتماد کرده‌اند</p>
+            <div class="clients-grid">
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت فولاد آلیاژی ایران</span>
+                        <span class="logo-subtitle">صنایع فولاد</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">گروه صنعتی ایران خودرو</span>
+                        <span class="logo-subtitle">صنایع خودرو</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت پتروشیمی پارس</span>
+                        <span class="logo-subtitle">صنایع پتروشیمی</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">بانک پارسیان</span>
+                        <span class="logo-subtitle">خدمات مالی</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت ارتباطات سیار ایران</span>
+                        <span class="logo-subtitle">ارتباطات</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">گروه صنعتی کاوه</span>
+                        <span class="logo-subtitle">صنایع خودرو</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت نفت و گاز پارس</span>
+                        <span class="logo-subtitle">صنایع نفت</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت سایپا</span>
+                        <span class="logo-subtitle">صنایع خودرو</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت پست پیشتاز</span>
+                        <span class="logo-subtitle">خدمات پستی</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت بیمه دی</span>
+                        <span class="logo-subtitle">خدمات بیمه</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت فولاد خوزستان</span>
+                        <span class="logo-subtitle">صنایع فولاد</span>
+                    </div>
+                </div>
+                <div class="client-logo">
+                    <div class="logo-placeholder">
+                        <span class="logo-text">شرکت پتروشیمی فن‌آوران</span>
+                        <span class="logo-subtitle">صنایع پتروشیمی</span>
+                    </div>
                 </div>
             </div>
         </div>
