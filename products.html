@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محصولات هوشان سیستم - پلتفرم دوقلوهای دیجیتال و بازی‌های VR</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- EmailJS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         /* Persian Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
@@ -141,12 +143,6 @@
             font-weight: bold;
         }
         
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
         
         .product-btn {
             width: 100%;
@@ -274,6 +270,129 @@
             transform: translateY(-3px);
         }
         
+        /* Consultation Form Modal */
+        .form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-cancel {
+            background: #e2e8f0;
+            color: #666;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-cancel:hover {
+            background: #cbd5e1;
+        }
+        
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .form-success h3 {
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+        
         @media (max-width: 768px) {
             .products-header h1 {
                 font-size: 2rem;
@@ -291,6 +410,10 @@
             .cta-buttons {
                 flex-direction: column;
                 align-items: center;
+            }
+            
+            .form-buttons {
+                flex-direction: column;
             }
         }
     </style>
@@ -330,8 +453,7 @@
                         <li>گزارش‌گیری جامع و دقیق</li>
                         <li>پشتیبانی از انواع پروتکل‌ها</li>
                     </ul>
-                    <div class="product-price">از ۵۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('پلتفرم نظارت هوشمند')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -345,8 +467,7 @@
                         <li>گزارش‌های تحلیلی پیشرفته</li>
                         <li>الگوریتم‌های یادگیری ماشین</li>
                     </ul>
-                    <div class="product-price">از ۸۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -360,8 +481,7 @@
                         <li>مانیتورینگ امنیتی ۲۴/۷</li>
                         <li>پشتیبان‌گیری خودکار</li>
                     </ul>
-                    <div class="product-price">از ۶۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('سیستم امنیت سایبری')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -375,8 +495,7 @@
                         <li>رابط کاربری ساده</li>
                         <li>قابلیت توسعه و سفارشی‌سازی</li>
                     </ul>
-                    <div class="product-price">از ۴۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -390,8 +509,7 @@
                         <li>ارتباط بی‌سیم و سیمی</li>
                         <li>دقت بالا و قابلیت اطمینان</li>
                     </ul>
-                    <div class="product-price">از ۲۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -405,8 +523,7 @@
                         <li>گزارش‌گیری مصرف</li>
                         <li>هشدارهای مصرف غیرعادی</li>
                     </ul>
-                    <div class="product-price">از ۷۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
             </div>
         </div>
@@ -428,8 +545,7 @@
                         <li>ابزارهای توسعه پیشرفته</li>
                         <li>بهینه‌سازی برای موبایل و PC</li>
                     </ul>
-                    <div class="product-price">از ۱۵۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('موتور بازی VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -443,8 +559,7 @@
                         <li>چندین حالت بازی</li>
                         <li>پشتیبانی از بازی چندنفره</li>
                     </ul>
-                    <div class="product-price">از ۸۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('بازی‌های اکشن VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -458,8 +573,7 @@
                         <li>گزارش‌گیری پیشرفت</li>
                         <li>پشتیبانی از محتوای سفارشی</li>
                     </ul>
-                    <div class="product-price">از ۱۲۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -473,8 +587,7 @@
                         <li>فیدبک فوری و دقیق</li>
                         <li>پایگاه داده پزشکی جامع</li>
                     </ul>
-                    <div class="product-price">از ۲۰۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -488,8 +601,7 @@
                         <li>اشتراک‌گذاری آسان</li>
                         <li>پشتیبانی از موبایل و VR</li>
                     </ul>
-                    <div class="product-price">از ۶۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
 
                 <div class="product-card">
@@ -503,8 +615,7 @@
                         <li>آموزش تکنیک‌های هنری</li>
                         <li>صادرات در فرمت‌های مختلف</li>
                     </ul>
-                    <div class="product-price">از ۱۰۰ میلیون تومان</div>
-                    <button class="product-btn">درخواست مشاوره</button>
+                    <button class="product-btn" onclick="openConsultationForm('آموزش مجازی VR')">درخواست مشاوره</button>
                 </div>
             </div>
         </div>
@@ -566,10 +677,84 @@
             <p>با تیم متخصص ما تماس بگیرید و راهکار مناسب برای کسب‌وکار خود را پیدا کنید</p>
             <div class="cta-buttons">
                 <a href="demo.html" class="btn-cta btn-primary-cta">مشاهده دمو</a>
-                <a href="#contact" class="btn-cta btn-secondary-cta">تماس با ما</a>
+                <a href="javascript:void(0)" class="btn-cta btn-secondary-cta" onclick="openGeneralContact()">تماس با ما</a>
             </div>
         </div>
     </section>
+
+    <!-- Consultation Form Modal -->
+    <div class="form-overlay" id="consultationForm">
+        <div class="form-modal">
+            <div class="form-header">
+                <h3>درخواست مشاوره</h3>
+                <p id="formProductName">محصول مورد نظر</p>
+            </div>
+            
+            <form id="consultationFormData">
+                <div class="form-group">
+                    <label for="fullName">نام و نام خانوادگی *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">نام شرکت</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">ایمیل *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">شماره تماس *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="industry">صنعت</label>
+                    <select id="industry" name="industry">
+                        <option value="">انتخاب کنید</option>
+                        <option value="manufacturing">صنایع تولیدی</option>
+                        <option value="energy">صنایع انرژی</option>
+                        <option value="healthcare">بهداشت و درمان</option>
+                        <option value="education">آموزش و پرورش</option>
+                        <option value="gaming">بازی‌سازی</option>
+                        <option value="real-estate">املاک و معماری</option>
+                        <option value="other">سایر</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="budget">بودجه تقریبی</label>
+                    <select id="budget" name="budget">
+                        <option value="">انتخاب کنید</option>
+                        <option value="under-50m">زیر ۵۰ میلیون تومان</option>
+                        <option value="50m-100m">۵۰ تا ۱۰۰ میلیون تومان</option>
+                        <option value="100m-200m">۱۰۰ تا ۲۰۰ میلیون تومان</option>
+                        <option value="over-200m">بالای ۲۰۰ میلیون تومان</option>
+                        <option value="discuss">در جلسه مشاوره مطرح می‌کنم</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">توضیحات پروژه</label>
+                    <textarea id="message" name="message" placeholder="لطفاً نیازهای خود را به طور خلاصه شرح دهید..."></textarea>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn-submit">ارسال درخواست</button>
+                    <button type="button" class="btn-cancel" onclick="closeConsultationForm()">انصراف</button>
+                </div>
+            </form>
+            
+            <div class="form-success" id="formSuccess">
+                <h3>✅ درخواست شما با موفقیت ارسال شد!</h3>
+                <p>تیم ما در اسرع وقت با شما تماس خواهد گرفت.</p>
+                <button class="btn-submit" onclick="closeConsultationForm()">بستن</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer-landing">
@@ -578,10 +763,162 @@
                 <a href="landing.html">صفحه اصلی</a>
                 <a href="products.html">محصولات</a>
                 <a href="demo.html">دمو</a>
-                <a href="#contact">تماس با ما</a>
+                <a href="javascript:void(0)" onclick="openGeneralContact()">تماس با ما</a>
             </div>
             <p>&copy; ۱۴۰۳ هوشان سیستم. تمامی حقوق محفوظ است.</p>
         </div>
     </footer>
+
+    <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init('EC0-L91uKJXwLgd8n');
+        })();
+        
+        // Universal Contact Functions
+        function openConsultationForm(productName) {
+            document.getElementById('formProductName').textContent = productName;
+            document.getElementById('consultationForm').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function openGeneralContact() {
+            document.getElementById('formProductName').textContent = 'تماس عمومی';
+            document.getElementById('consultationForm').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeConsultationForm() {
+            document.getElementById('consultationForm').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('consultationFormData').reset();
+            document.getElementById('formSuccess').style.display = 'none';
+            document.getElementById('consultationFormData').style.display = 'block';
+        }
+        
+        // Form Submission
+        document.getElementById('consultationFormData').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {
+                product: document.getElementById('formProductName').textContent,
+                fullName: formData.get('fullName'),
+                company: formData.get('company'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                industry: formData.get('industry'),
+                budget: formData.get('budget'),
+                message: formData.get('message'),
+                timestamp: new Date().toLocaleString('fa-IR')
+            };
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.btn-submit');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'در حال ارسال...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (replace with actual service)
+            setTimeout(() => {
+                // Here you would normally send to your backend or email service
+                console.log('Form Data:', data);
+                
+                // Show success message
+                document.getElementById('consultationFormData').style.display = 'none';
+                document.getElementById('formSuccess').style.display = 'block';
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Send to email service (example with EmailJS)
+                sendEmail(data);
+                
+            }, 2000);
+        });
+        
+        // Email sending function with EmailJS
+        function sendEmail(data) {
+            console.log('Attempting to send email with data:', data);
+            
+            // First, let's test with a simple template
+            // You need to create a template in EmailJS with these exact variables:
+            const templateParams = {
+                to_name: 'HooshanSystem Team',
+                from_name: data.fullName,
+                from_email: data.email,
+                message: `Product: ${data.product}\nCompany: ${data.company || 'N/A'}\nPhone: ${data.phone}\nIndustry: ${data.industry || 'N/A'}\nBudget: ${data.budget || 'N/A'}\nMessage: ${data.message || 'No message'}\nTime: ${data.timestamp}`
+            };
+            
+            console.log('Template params:', templateParams);
+            
+            // Send email with your actual template ID
+            emailjs.send('service_5gf4jhl', 'template_ii58ltp', templateParams)
+            .then(function(response) {
+                console.log('SUCCESS! Email sent:', response.status, response.text);
+                showNotification('ایمیل با موفقیت ارسال شد!', 'success');
+            }, function(error) {
+                console.log('FAILED! Email error:', error);
+                console.log('Error details:', JSON.stringify(error, null, 2));
+                showNotification(`خطا در ارسال ایمیل: ${error.text || error.message}`, 'error');
+            });
+        }
+        
+        // Notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            // Style the notification
+            Object.assign(notification.style, {
+                position: 'fixed',
+                top: '20px',
+                right: '20px',
+                padding: '12px 20px',
+                borderRadius: '8px',
+                color: 'white',
+                fontWeight: '500',
+                zIndex: '10001',
+                maxWidth: '300px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                transform: 'translateX(400px)',
+                transition: 'all 0.3s ease'
+            });
+
+            // Set background color based on type
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444'
+            };
+            notification.style.background = colors[type] || colors.success;
+
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('consultationForm').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeConsultationForm();
+            }
+        });
+    </script>
 </body>
 </html>
